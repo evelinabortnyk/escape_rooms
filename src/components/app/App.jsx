@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Layout from '../layout/Layout'
-import Escapes from "../escapes/Escapes";
+import Escapes from "../pages/home-page/Escapes";
 
 function App() {
     return (

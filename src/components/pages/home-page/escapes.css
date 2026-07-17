@@ -1,0 +1,142 @@
+.escapes-wrap{
+    display: flex;
+    flex-direction: column;
+    /* width: 60%;
+    margin: 0 auto; */
+    padding:  20px;
+    font-size: 14px;
+}
+
+.escapes-component{
+    padding: 30px 0;
+}
+
+.escapes--head > p{
+    color: var(--yellow);
+    padding-bottom: 20px;
+}
+
+.escapes--head > h1{
+    font-size: 60px;
+}
+
+.escapes--filters{
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.filter:nth-child(3), .filter:last-child{
+    border-right: none;
+}
+
+.filter{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 30%;
+    border-right: 1px solid #fff ;
+    cursor: pointer;
+}
+.filter > img{
+    margin-right: 10px;
+    width: 26px;
+    height: 30px;
+}
+
+.escapes--quests{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.quest{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+
+    flex: 50%;
+    max-width: calc(50% - 10px);
+    aspect-ratio: 4 /3;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 10px;
+    z-index: 1;
+}
+
+.quest::after{
+    content: '';
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 50%;
+    left: 0;
+    top: 50%;
+    z-index: 2;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
+}
+
+.quest > h2{
+    z-index: 3;
+    font-size: 18px;
+}
+
+.quest-info{
+    display: flex;  
+
+    padding-top: 15px;
+    z-index: 3;
+}
+
+.quest-info > div{
+    display: flex;
+    align-items: center;
+    padding: 10px 30px 0 0;
+}
+
+.quest--persons{
+    position: relative;
+}
+
+.quest--persons::after{
+    content: '';
+    position: absolute;
+    display: block;
+    width: 1px;
+    height: 100%;
+    left: calc(100% - 15px);
+    background-color: #fff;
+}
+
+.quest--icon{
+    margin-right: 10px;
+}
+
+@media (min-width: 768px) {
+    .escapes-wrap{
+        max-width: 1080px;
+        margin: 0 auto;
+    }
+
+    .filter:nth-child(3){
+        border-right: 1px solid #fff;
+    }
+
+    .filter{
+        flex: calc(100% / 6 - 10px);
+    }
+    .filter > p{
+        transition: all 0.3s ease;
+    }
+
+    .filter > p:hover{
+        color: var(--yellow);
+    }
+
+    .quest{
+        flex: calc(100% / 3);
+        max-width: calc(100% / 3 - 20px);
+    }
+}
