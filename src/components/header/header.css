@@ -17,7 +17,7 @@ header {
 
 .header--nav {
     position: absolute;
-    width: calc(100% - 2%);
+    width: calc(100% - 24px);
     padding-top: 74px ;
 }
 
