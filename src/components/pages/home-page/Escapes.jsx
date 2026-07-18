@@ -1,3 +1,6 @@
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
+
 import './escapes.css'
 import AllQuests from './img/all.svg'
 import Adventures from './img/adventures.svg'
@@ -10,48 +13,53 @@ import puzzleIcon from './img/puzzle.svg'
 
 import quests from '../../../assets/quests.js'
 
-function Escapes () {
-
-    const filters = [
-        {'title': 'All quests', 'src': AllQuests,},
-        {'title': 'Adventures', 'src': Adventures,},
-        {'title': 'Horror', 'src': Horror,},
-        {'title': 'Mysticism', 'src': Mysticism,},
-        {'title': 'Detective', 'src': Detective,},
-        {'title': 'Sci-Fi', 'src': SciFi,},
-    ]
+function Escapes() {
+    const [filteredArr, setFilteredArr] = useState(quests)
     
-    return(
+    const filters = [
+        { 'title': 'All quests', 'value': 'all', 'src': AllQuests, },
+        { 'title': 'Adventures', 'value': 'adventures', 'src': Adventures, },
+        { 'title': 'Horror', 'value': 'horror', 'src': Horror, },
+        { 'title': 'Mysticism', 'value': 'mystic', 'src': Mysticism, },
+        { 'title': 'Detective', 'value': 'detective', 'src': Detective, },
+        { 'title': 'Sci-Fi', 'value': 'sci-fi', 'src': SciFi, },
+    ]
+
+    function filteringArr(value) {
+        const newArr = value === 'all' ? quests :  quests.filter((item)=> item.type == value)
+        setFilteredArr(newArr)
+    }
+    return (
         <main className="escapes-wrap">
-              <div className="escapes-component escapes--head">
+            <div className="escapes-component escapes--head">
                 <p>Games in Lviv</p>
                 <h1>Choose a topic</h1>
-              </div>
-              <div className="escapes-component escapes--filters">
-                {filters.map((filter, index)=>(
-                    <div className="filter" key={index}>
+            </div>
+            <div className="escapes-component escapes--filters">
+                {filters.map((filter, index) => (
+                    <div className="filter" key={index} onClick={()=> filteringArr(filter.value) }>
                         <img src={filter.src} alt={filter.title} />
                         <p>{filter.title}</p>
                     </div>
                 ))}
-              </div>
-              <div className="escapes-component escapes--quests">
-                    {quests.map(quest => (
-                        <div key={quest.id} className='quest' style={{ backgroundImage: `url(${quest.previewImg})`}}>
-                            <h2>{quest.title}</h2>
-                            <div className='quest-info'>
-                                <div className='quest--persons'>
-                                    <img src={personIcon} alt="person-icon" className='quest--icon' />
-                                    <p>{quest.peopleCount[0]} - {quest.peopleCount[1]}</p>
-                                </div>
-                                <div>
-                                    <img src={puzzleIcon} alt="puzzle-icon" className='quest--icon' />
-                                    <p>{quest.level}</p>
-                                </div>
+            </div>
+            <div className="escapes-component escapes--quests">
+                {filteredArr.map(quest => (
+                    <Link key={quest.id} to={`${quest.title}`} className='quest' style={{ backgroundImage: `url(${quest.previewImg})` }}>
+                        <h2>{quest.title}</h2>
+                        <div className='quest-info'>
+                            <div className='quest--persons'>
+                                <img src={personIcon} alt="person-icon" className='quest--icon' />
+                                <p>{quest.peopleCount[0]} - {quest.peopleCount[1]}</p>
+                            </div>
+                            <div>
+                                <img src={puzzleIcon} alt="puzzle-icon" className='quest--icon' />
+                                <p>{quest.level}</p>
                             </div>
                         </div>
-                    ))}
-              </div>
+                    </Link>
+                ))}
+            </div>
         </main>
     )
 }
