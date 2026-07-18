@@ -45,7 +45,7 @@ function Escapes() {
             </div>
             <div className="escapes-component escapes--quests">
                 {filteredArr.map(quest => (
-                    <Link key={quest.id} to={`${quest.title}`} className='quest' style={{ backgroundImage: `url(${quest.previewImg})` }}>
+                    <Link key={quest.id} to={`${(quest.title).toLowerCase()}/${quest.id}`} className='quest' style={{ backgroundImage: `url(${quest.previewImg})` }}>
                         <h2>{quest.title}</h2>
                         <div className='quest-info'>
                             <div className='quest--persons'>
