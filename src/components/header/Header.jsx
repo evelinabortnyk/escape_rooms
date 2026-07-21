@@ -1,12 +1,27 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect, use } from 'react'
 
 import './header.css'
 import Logo from './img/logo.svg'
 
 function Header() {
+    const ref= useRef();
+    
     const [menuActive, setMenuActive] = useState(false)
     const [classListBtn, setClassListBtn] = useState("menu-btn")
     const [classListMenu, setClassListMenu] = useState("burger-menu")
+
+    useEffect(() => {
+        function handleClick(e){
+            if (ref.current && !ref.current.contains(e.target)) {
+                setMenuActive(false)
+                setClassListBtn('menu-btn')
+                setClassListMenu('burger-menu')
+            }
+        };
+        document.addEventListener('click', handleClick);
+    }, [])
+
+    
 
     const naviArr = [
         { 'value': 'Quests', 'link': '', },
@@ -18,10 +33,11 @@ function Header() {
 
     const text = '< Front end developer />'
 
-    function menuClick() {
-        setMenuActive(!menuActive)
 
-        if (menuActive === true) {
+    function menuClick(value) {
+        setMenuActive(!value)
+
+        if (!value === true) {
             setClassListBtn('menu-btn-active')
             setClassListMenu('burger-menu-active')
         } else {
@@ -30,13 +46,13 @@ function Header() {
         }
     }
     return (
-        <header>
+        <header ref={ref}>
             <div className="header-component header--logo">
                 <img src={Logo} alt="" />
             </div>
-            <a href="#" className={`menu-btn ${classListBtn}`} value={menuActive} onClick={() => menuClick()}>
+            <button className={`menu-btn ${classListBtn}`} value={menuActive} onClick={() => menuClick(menuActive)}>
                     <span className="menu-btn-burger"></span>
-                </a>
+                </button >
             <div className="header-component header--nav">
                 <div className="menu">
                     <nav className={`burger-menu ${classListMenu}`}>
