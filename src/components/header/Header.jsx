@@ -21,8 +21,6 @@ function Header() {
         document.addEventListener('click', handleClick);
     }, [])
 
-    
-
     const naviArr = [
         { 'value': 'Quests', 'link': '', },
         { 'value': 'FOR BEGINNERS', 'link': '', },
@@ -30,9 +28,6 @@ function Header() {
         { 'value': 'PROMOTIONS', 'link': '', },
         { 'value': 'contacts', 'link': '', },
     ]
-
-    const text = '< Front end developer />'
-
 
     function menuClick(value) {
         setMenuActive(!value)
