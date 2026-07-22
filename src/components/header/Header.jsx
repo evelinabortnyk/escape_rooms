@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect, use } from 'react'
+import { useState, useRef, useEffect, } from 'react'
+import {Link} from 'react-router-dom'
 
 import './header.css'
 import Logo from './img/logo.svg'
@@ -22,11 +23,11 @@ function Header() {
     }, [])
 
     const naviArr = [
-        { 'value': 'Quests', 'link': '', },
+        { 'value': 'Quests', 'link': '/', },
         { 'value': 'FOR BEGINNERS', 'link': '', },
         { 'value': 'REVIEWS', 'link': '', },
         { 'value': 'PROMOTIONS', 'link': '', },
-        { 'value': 'contacts', 'link': '', },
+        { 'value': 'contacts', 'link': '/contacts', },
     ]
 
     function menuClick(value) {
@@ -53,7 +54,9 @@ function Header() {
                     <nav className={`burger-menu ${classListMenu}`}>
                         <ul className="menu-list">
                             {naviArr.map((item, index) => (
-                                <li key={index} onClick={() => { document.getElementById(`${item.link}`)?.scrollIntoView({ behavior: 'smooth' }) }}><a href={`#${item.link}`}>{item.value}</a></li>
+                                <Link to={item.link} key={index} onClick={() => { document.getElementById(`${item.link}`)?.scrollIntoView({ behavior: 'smooth' }) }}>
+                                    <li>{item.value}</li>
+                                </Link>
                             ))}
                         </ul>
                     </nav>

@@ -1,7 +1,9 @@
 header {
+    position: absolute;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
     height: 74px;
     padding: 12px;
 }
@@ -116,7 +118,7 @@ li {
     padding: 0;
 }
 
-.menu-list>li {
+.menu-list >a {
     display: block;
 
     padding: 10px 0;
@@ -124,7 +126,6 @@ li {
     text-decoration: none;
     text-shadow: 2px -1px 22px rgba(1, 1, 1, 0.92);
     transition: border 0.3s ease 0.3s;
-
 }
 
 .header--phone {
@@ -140,7 +141,7 @@ li {
     .header--nav{
         position: relative;
         padding: 0;
-        width: calc(100% - 44%);
+        width: calc(100% - 40%);
     }
 
     .menu-btn{
@@ -167,23 +168,21 @@ li {
     .menu-list{
         display: flex;
         flex-direction: row;
-        justify-content: end;
+        justify-content: space-around;
         width: 100%;
+        gap: 24px;
     }
 
-    .menu-list>li{
-        margin: 0 20px;
-    }
-
-    .menu-list>li{
+    
+    .menu-list> a{
         display: block;
         position: relative;
     }
 
-    li > a{
+    li {
         transition: all 0.3s ease;
     }
-    li > a:hover {
+    li:hover {
         color: yellow;
     }
     
