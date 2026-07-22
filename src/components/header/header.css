@@ -21,6 +21,7 @@ header {
     position: absolute;
     width: calc(100% - 24px);
     padding-top: 74px ;
+    z-index: 9998;
 }
 
 /* Burger-menu */
@@ -52,7 +53,7 @@ li {
     border-radius: 50%;
     right: 2vh;
     top: 30px;
-    z-index: 2;
+    z-index: 9999;
 }
 
 .menu-btn span,

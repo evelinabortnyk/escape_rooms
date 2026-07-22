@@ -1,9 +1,7 @@
 .escapes-wrap{
     display: flex;
     flex-direction: column;
-    /* width: 60%;
-    margin: 0 auto; */
-    padding:  20px;
+    padding:  74px 20px 20px 20px;
     font-size: 14px;
 }
 
