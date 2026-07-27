@@ -1,0 +1,57 @@
+.form-container {
+    position: relative;
+    width: 480px;
+    background-color: #141414;
+    border-radius: 20px;
+    padding: calc(60px + 14px) 30px 30px 30px;
+}
+
+.form-close{
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    right: 20px;
+    top: 20px;
+    background-color: inherit;
+}
+
+.form-container >h3{
+    font-size: 40px;
+}
+
+form { 
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    padding: 15px 0;
+}
+
+.form--input{
+    height: 53px;
+    padding: 0 10px;
+    background-color: #535353;
+    border: none;
+    border-radius: 6px;
+    
+}
+
+.form--cookies-wrap {
+    display: flex;     
+    align-items: start;
+}
+
+
+.form--cookies-wrap >label{
+    padding-left: 10px;
+}
+
+.form-submit{
+    width: 229px;
+    height: 47px;
+    margin: 0 auto;
+    border-radius: 6px;
+    background-color: var(--yellow);
+    font-size: 16px;
+    color: #535353;
+}
