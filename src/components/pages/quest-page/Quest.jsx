@@ -31,9 +31,9 @@ function Quest() {
         }
         if(!/^[0-9]/i.test(values.count)){
             errors.count = 'Enter the nimber'
-        } else if(values.count < guestsCount[0] || values.count > guestsCount[1]){
-            errors.count = `Number of guests from ${guestsCount[0]} to ${guestsCount[1]}`
-        } if (!values.coockies) {
+        } else if(+values.count < quest.peopleCount[0] || +values.count > quest.peopleCount[1]){
+            errors.count = `Number of guests from ${quest.peopleCount[0]} to ${quest.peopleCount[1]}`
+        } if (values.coockies === false) {
             errors.coockies = 'Agree to condition'
         }
 
@@ -42,7 +42,6 @@ function Quest() {
 
     const quest = quests.find(item => item.id === +id)
 
-    // const guestsCount = quest.peopleCount
     return (
         <div className='quest-container' style={{ backgroundImage: `url(${quest.coverImg})` }}>
             <div className='quest--info'>
@@ -57,14 +56,13 @@ function Quest() {
                 <button className='quest--info-btn' onClick={() => setformState(true)}>BOOK NOW</button>
             </div>
             <div className={formState ? 'form-wrap' : 'hidden'}>
-                {/* <Form guestsCount={guestsCount}/> */}
                 <div className="form-container">
-            <button className='form-close'>
+            <button className='form-close' onClick={()=>setformState(false)}>
                 <img src={closeVector} alt="close-button" />
             </button>
             <h3>Match squad</h3>
             <Formik
-                initialValues={{name: '', phone: '', count: '' }}
+                initialValues={{name: '', phone: '', count: '', cookies: '', }}
                 validate={validate}
                   onSubmit={(values) => {
                     console.log('Submit:', values)
@@ -72,24 +70,21 @@ function Quest() {
             >
                 {({ handleSubmit, values, errors, handleChange, handleBlur, touched, isSubmitting,})=> (
                     <form onSubmit={handleSubmit}>
-                        {/* <label htmlFor="name">Name: </label> */}
                         <input className="form--input" type="name" placeholder='Name' name='name' onChange={handleChange} onBlur={handleBlur} value={values.name} />
                         <p>{errors.name && touched.name && errors.name}</p>
 
-                        {/* <label htmlFor="phone">Phone: </label> */}
                         <input className="form--input" type="phone" placeholder='Phone numde' name='phone' onChange={handleChange} onBlur={handleBlur} value={values.phone} />
                         <p>{errors.phone && touched.phone && errors.phone}</p>
 
-                        {/* <label htmlFor="count">Email: </label> */}
-                        <input className="form--input" type="count" placeholder='count' name='Count' onChange={handleChange} onBlur={handleBlur} value={values.count} />
+                        <input type="text" className="form--input"  placeholder='Number of guests' name='count' onChange={handleChange} onBlur={handleBlur} value={values.count}/>
                         <p>{errors.count && touched.count && errors.count}</p>
+
                         <div className="form--cookies-wrap">
-                            <input type="checkbox" id="cookies" name="cookies" value="cookies" />
+                            <input type="checkbox" id="cookies" name="cookies" onChange={handleChange} onBlur={handleBlur} value={values.cookies}/>
                             <label htmlFor="cookies">I agree to the personal data processing rules and the user agreement.</label>
-                            <p>{errors.coockies && touched.coockies && errors.coockies}</p>
                         </div>
-                        <button className='form-submit' type="submit" disabled={isSubmitting}>Submit</button>
-                        
+                        <p>{errors.coockies && touched.coockies && errors.coockies}</p>
+                        <button className='form-submit' type="submit" disabled={isSubmitting}>Submit</button>    
                     </form>
                 )}
             </Formik>
