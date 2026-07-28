@@ -33,8 +33,8 @@ function Quest() {
             errors.count = 'Enter the nimber'
         } else if(+values.count < quest.peopleCount[0] || +values.count > quest.peopleCount[1]){
             errors.count = `Number of guests from ${quest.peopleCount[0]} to ${quest.peopleCount[1]}`
-        } if (values.coockies === false) {
-            errors.coockies = 'Agree to condition'
+        } if (values.cookies === false) {
+            errors.cookies = 'Agree to condition'
         }
 
         return errors;
@@ -62,7 +62,7 @@ function Quest() {
             </button>
             <h3>Match squad</h3>
             <Formik
-                initialValues={{name: '', phone: '', count: '', cookies: '', }}
+                initialValues={{name: '', phone: '', count: '', cookies: false, }}
                 validate={validate}
                   onSubmit={(values) => {
                     console.log('Submit:', values)
@@ -83,7 +83,7 @@ function Quest() {
                             <input type="checkbox" id="cookies" name="cookies" onChange={handleChange} onBlur={handleBlur} value={values.cookies}/>
                             <label htmlFor="cookies">I agree to the personal data processing rules and the user agreement.</label>
                         </div>
-                        <p>{errors.coockies && touched.coockies && errors.coockies}</p>
+                        <p>{errors.cookies && touched.cookies && errors.cookies}</p>
                         <button className='form-submit' type="submit" disabled={isSubmitting}>Submit</button>    
                     </form>
                 )}
