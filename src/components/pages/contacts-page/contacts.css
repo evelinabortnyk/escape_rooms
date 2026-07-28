@@ -5,10 +5,6 @@
     justify-content: center;
     padding: 74px 20%;
 
-    background-image: url(./img/bg.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
 }
 
 .contacts-header{
