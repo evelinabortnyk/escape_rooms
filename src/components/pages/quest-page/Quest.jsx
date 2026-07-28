@@ -16,7 +16,15 @@ import closeVector from './img/close.svg'
 
 function Quest() {
     const { id } = useParams();
+    const quest = quests.find(item => item.id === +id)
+
     const [formState, setformState] = useState(false) 
+    const [formData, setFormData] = useState({
+        'quest': `${quest.title}`,
+        'name': '',
+        'phone': '',
+        'guests': '',
+    })
     const validate = (values) => {
         const errors = {};
         if (!values.name) {
@@ -29,18 +37,15 @@ function Quest() {
         } else if(values.phone.length >12){
             errors.phone = 'No more 12 sumbols';
         }
-        if(!/^[0-9]/i.test(values.count)){
-            errors.count = 'Enter the nimber'
-        } else if(+values.count < quest.peopleCount[0] || +values.count > quest.peopleCount[1]){
-            errors.count = `Number of guests from ${quest.peopleCount[0]} to ${quest.peopleCount[1]}`
+        if(!/^[0-9]/i.test(values.guests)){
+            errors.guests = 'Enter the nimber'
+        } else if(+values.guests < quest.peopleCount[0] || +values.guests > quest.peopleCount[1]){
+            errors.guests = `Number of guests from ${quest.peopleCount[0]} to ${quest.peopleCount[1]}`
         } if (values.cookies === false) {
             errors.cookies = 'Agree to condition'
         }
-
         return errors;
       };
-
-    const quest = quests.find(item => item.id === +id)
 
     return (
         <div className='quest-container' style={{ backgroundImage: `url(${quest.coverImg})` }}>
@@ -62,12 +67,12 @@ function Quest() {
             </button>
             <h3>Match squad</h3>
             <Formik
-                initialValues={{name: '', phone: '', count: '', cookies: false, }}
+                initialValues={{name: '', phone: '', guests: '', cookies: false, }}
                 validate={validate}
                   onSubmit={(values) => {
-                    console.log('Submit:', values)
+                    setFormData({...formData, ...values} )
                   }}
-            >
+            >   
                 {({ handleSubmit, values, errors, handleChange, handleBlur, touched, isSubmitting,})=> (
                     <form onSubmit={handleSubmit}>
                         <input className="form--input" type="name" placeholder='Name' name='name' onChange={handleChange} onBlur={handleBlur} value={values.name} />
@@ -76,8 +81,8 @@ function Quest() {
                         <input className="form--input" type="phone" placeholder='Phone numde' name='phone' onChange={handleChange} onBlur={handleBlur} value={values.phone} />
                         <p>{errors.phone && touched.phone && errors.phone}</p>
 
-                        <input type="text" className="form--input"  placeholder='Number of guests' name='count' onChange={handleChange} onBlur={handleBlur} value={values.count}/>
-                        <p>{errors.count && touched.count && errors.count}</p>
+                        <input type="text" className="form--input"  placeholder='Number of guests' name='guests' onChange={handleChange} onBlur={handleBlur} value={values.guests}/>
+                        <p>{errors.guests && touched.guests && errors.guests}</p>
 
                         <div className="form--cookies-wrap">
                             <input type="checkbox" id="cookies" name="cookies" onChange={handleChange} onBlur={handleBlur} value={values.cookies}/>
