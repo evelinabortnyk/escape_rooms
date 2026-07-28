@@ -24,9 +24,9 @@ function Header() {
 
     const naviArr = [
         { 'value': 'Quests', 'link': '/', },
-        { 'value': 'FOR BEGINNERS', 'link': '', },
-        { 'value': 'REVIEWS', 'link': '', },
-        { 'value': 'PROMOTIONS', 'link': '', },
+        { 'value': 'FOR BEGINNERS', 'link': '/for-beginners', },
+        { 'value': 'REVIEWS', 'link': '/reviews', },
+        { 'value': 'PROMOTIONS', 'link': '/promotions', },
         { 'value': 'contacts', 'link': '/contacts', },
     ]
 
