@@ -11,11 +11,12 @@ import SciFi from './img/sciFi.svg'
 import personIcon from './img/person.svg'
 import puzzleIcon from './img/puzzle.svg'
 
-import quests from '../../../assets/quests.js'
+// import quests from '../../../assets/quests.js'
+import quests from '../../../server/post.js'
 
 function Escapes() {
     const [filteredArr, setFilteredArr] = useState(quests)
-    
+        
     const filters = [
         { 'title': 'All quests', 'value': 'all', 'src': AllQuests, },
         { 'title': 'Adventures', 'value': 'adventures', 'src': Adventures, },

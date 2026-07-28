@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {Formik,} from 'formik'
 
 import './quest.css'
@@ -16,15 +16,25 @@ import closeVector from './img/close.svg'
 
 function Quest() {
     const { id } = useParams();
-    const quest = quests.find(item => item.id === +id)
+    const [quest, setQuest] = useState(null)
+
+    useEffect(() => {        
+        fetch(`http://localhost:8080/dataQuests?id=${id}`)
+            .then(res => res.json())
+            .then(data => setQuest(data));
+    }, []);
+  
+    
+    // const quest = quests.find(item => item.id === +id)
 
     const [formState, setformState] = useState(false) 
     const [formData, setFormData] = useState({
-        'quest': `${quest.title}`,
-        'name': '',
-        'phone': '',
-        'guests': '',
+            'quest': '',
+            'name': '',
+            'phone': '',
+            'guests': '',
     })
+    
     const validate = (values) => {
         const errors = {};
         if (!values.name) {
@@ -46,8 +56,11 @@ function Quest() {
         }
         return errors;
       };
-
+    if (!quest) {
+        return <div>Loading...</div>
+    } 
     return (
+
         <div className='quest-container' style={{ backgroundImage: `url(${quest.coverImg})` }}>
             <div className='quest--info'>
                 <p className='quest--info-head'>{quest.type}</p>
@@ -70,7 +83,8 @@ function Quest() {
                 initialValues={{name: '', phone: '', guests: '', cookies: false, }}
                 validate={validate}
                   onSubmit={(values) => {
-                    setFormData({...formData, ...values} )
+                    setFormData({...formData, ...values, 'quest': `${quest.title}`,} )
+                    
                   }}
             >   
                 {({ handleSubmit, values, errors, handleChange, handleBlur, touched, isSubmitting,})=> (
