@@ -1,0 +1,15 @@
+.not-found--wrap{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    
+    background-image: url(./img/bg.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.not-found--title {
+    color: var(--yellow);  
+}
