@@ -2,10 +2,11 @@ import http from 'node:http'
 const PORT = 8080
 
 let questsArr = null
+let reserveArr = []
 
 http.createServer(function (req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*')
-    res.setHeader('Access-Control-Allow-Mrthods', 'GET, POST, OPTIONS')
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
 
     // POST
@@ -50,37 +51,52 @@ http.createServer(function (req, res) {
                     'Content-Type': 'application/json'
                 });
 
-                res.end(JSON.stringify(quest));
+                return res.end(JSON.stringify(quest));
             } else {
                 res.writeHead(404, {
                     'Content-Type': 'application/json'
                 });
 
-                res.end(JSON.stringify({
+                return res.end(JSON.stringify({
                     message: 'Quest not found'
                 }));
             }
         }
-    } else if (req.method === 'POST' && req.url === '/gram') {
+        return;
+    } else if(req.method === 'OPTIONS') {
+        res.writeHead(204);
+        return res.end();
+    } else if (req.method === 'POST' && req.url === '/reserve') {
+        console.log(req.method, req.url);
         let body = ''
         req.on('data', chunk => {
             body += chunk.toString()
         });
+
         req.on('end', () => {
-            // const newUser = JSON.parse(body) 
-            // newUser.id = questsArr.length + 1
-            // questsArr.push(newUser)
-            // return res.end(JSON.stringify(questsArr))
+            const newUser = JSON.parse(body) 
+            newUser.id = reserveArr.length + 1
+            reserveArr.push(newUser)
+
+            return res.end(JSON.stringify(reserveArr))
         })
-    } else if (req.method === "GET") {
+        return;
+    } else if (req.method === "GET" && req.url === '/dataQuests') {
         if (questsArr) {
             res.writeHead(200, { 'Content-Type': 'application/json' })
-            res.end(JSON.stringify(questsArr))
+            return res.end(JSON.stringify(questsArr))
         } else {
             res.writeHead(404, { 'Content-Type': 'text/plain' })
-            res.end('not objekt')
+            return res.end('not objekt')
         }
-    }
+    } else if (req.method === 'GET' && req.url === '/reserve') {
+        res.writeHead(200, {
+            'Content-Type': 'application/json'
+        });
+    
+        return res.end(JSON.stringify(reserveArr));
+
+    } 
 
     res.end();
 }).listen(PORT)
