@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 import './escapes.css'
@@ -11,12 +11,15 @@ import SciFi from './img/sciFi.svg'
 import personIcon from './img/person.svg'
 import puzzleIcon from './img/puzzle.svg'
 
-// import quests from '../../../assets/quests.js'
 import quests from '../../../server/post.js'
 
 function Escapes() {
-    const [filteredArr, setFilteredArr] = useState(quests)
-        
+    const [filteredArr, setFilteredArr] = useState([])
+
+    useEffect(() => {
+        Array.isArray(quests) ? setFilteredArr(quests): 0
+    }, [quests]);
+
     const filters = [
         { 'title': 'All quests', 'value': 'all', 'src': AllQuests, },
         { 'title': 'Adventures', 'value': 'adventures', 'src': Adventures, },
@@ -30,8 +33,12 @@ function Escapes() {
         const newArr = value === 'all' ? quests :  quests.filter((item)=> item.type == value)
         setFilteredArr(newArr)
     }
+    if (!quests) {
+        return <div className='data-err'>Loading...</div>
+    } 
+    
     return (
-        <main className="escapes-wrap">
+        <div className="escapes-wrap">
             <div className="escapes-component escapes--head">
                 <p>Games in Lviv</p>
                 <h1>Choose a topic</h1>
@@ -61,7 +68,7 @@ function Escapes() {
                     </Link>
                 ))}
             </div>
-        </main>
+        </div>
     )
 }
 
