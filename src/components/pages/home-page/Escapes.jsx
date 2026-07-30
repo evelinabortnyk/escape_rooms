@@ -17,7 +17,7 @@ function Escapes() {
 
     useEffect(() => {
 
-        fetch(`http://localhost:8080/dataQuests`)
+        fetch('https://escape-rooms-8h88.onrender.com/dataQuests')
             .then(res => res.json())
             .then(data =>{
                 setQuests(data)
