@@ -11,14 +11,24 @@ import SciFi from './img/sciFi.svg'
 import personIcon from './img/person.svg'
 import puzzleIcon from './img/puzzle.svg'
 
-import quests from '../../../server/post.js'
+
 
 function Escapes() {
-    const [filteredArr, setFilteredArr] = useState([])
+    const [filteredArr, setFilteredArr] = useState(null)
+    const [quests, setQuests] = useState(null)
 
     useEffect(() => {
-        Array.isArray(quests) ? setFilteredArr(quests): 0
-    }, [quests]);
+
+        fetch(`http://localhost:8080/dataQuests`)
+            .then(res => res.json())
+            .then(data =>{
+                console.log(data)
+                setQuests(data)
+                setFilteredArr(data);
+            })
+    }, []);
+
+    console.log(filteredArr)
 
     const filters = [
         { 'title': 'All quests', 'value': 'all', 'src': AllQuests, },
@@ -33,7 +43,7 @@ function Escapes() {
         const newArr = value === 'all' ? quests :  quests.filter((item)=> item.type == value)
         setFilteredArr(newArr)
     }
-    if (!quests) {
+    if (!quests && !filteredArr) {
         return <div className='data-err'>Loading...</div>
     } 
     

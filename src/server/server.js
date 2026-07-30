@@ -52,17 +52,32 @@ http.createServer(function (req, res) {
                 });
 
                 return res.end(JSON.stringify(quest));
-            } else {
-                res.writeHead(404, {
-                    'Content-Type': 'application/json'
-                });
-
-                return res.end(JSON.stringify({
-                    message: 'Quest not found'
-                }));
-            }
+            } 
+            res.writeHead(404, {
+                'Content-Type': 'application/json'
+            });
+    
+            return res.end(JSON.stringify({
+                message: 'Quest not found'
+            }));
+            
         }
-        return;
+        
+        if (questsArr) {
+            res.writeHead(200, {
+                'Content-Type': 'application/json'
+            });
+    
+            return res.end(JSON.stringify(questsArr));
+        }
+    
+        res.writeHead(404, {
+            'Content-Type': 'application/json'
+        });
+    
+        return res.end(JSON.stringify({
+            message: 'No quests loaded'
+        }));
     } else if(req.method === 'OPTIONS') {
         res.writeHead(204);
         return res.end();
@@ -97,6 +112,5 @@ http.createServer(function (req, res) {
         return res.end(JSON.stringify(reserveArr));
 
     } 
-
     res.end();
 }).listen(PORT)
