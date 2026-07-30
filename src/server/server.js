@@ -1,7 +1,13 @@
 import http from 'node:http'
+import fs from 'node:fs'
+
 const PORT = 8080
 
-let questsArr = null
+const questsArr = JSON.parse(
+    fs.readFileSync('./quests.json', 'utf-8')
+)
+
+// let questsArr = null
 let reserveArr = []
 
 http.createServer(function (req, res) {
@@ -96,15 +102,7 @@ http.createServer(function (req, res) {
             return res.end(JSON.stringify(reserveArr))
         })
         return;
-    } else if (req.method === "GET" && req.url === '/dataQuests') {
-        if (questsArr) {
-            res.writeHead(200, { 'Content-Type': 'application/json' })
-            return res.end(JSON.stringify(questsArr))
-        } else {
-            res.writeHead(404, { 'Content-Type': 'text/plain' })
-            return res.end('not objekt')
-        }
-    } else if (req.method === 'GET' && req.url === '/reserve') {
+    }  else if (req.method === 'GET' && req.url === '/reserve') {
         res.writeHead(200, {
             'Content-Type': 'application/json'
         });

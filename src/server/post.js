@@ -18,4 +18,4 @@ async function sendData(){
     }
 }
 
-export default await sendData()
+sendData()
