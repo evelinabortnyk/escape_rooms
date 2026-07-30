@@ -6,7 +6,7 @@ import Contacts from "../pages/contacts-page/Contacts";
 import NotFound from "../pages/not-found/NotFound";
 import ForBeginners from "../pages/for-beginners-page/ForBeginners";
 import Reviews from "../pages/reviews-page/Reviews";
-import Promotions from "../pages/promotions-page/promotions";
+import Promotions from "../pages/promotions-page/Promotions";
 
 function App() {
     return (
