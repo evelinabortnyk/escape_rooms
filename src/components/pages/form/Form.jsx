@@ -14,7 +14,7 @@ function Form({ guestsCount, questTitle }) {
 
     async function sendForm(obj){
         try{
-            const response = await fetch('http://localhost:8080/reserve', {
+            const response = await fetch('https://escape-rooms-8h88.onrender.com/reserve', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
