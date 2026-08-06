@@ -1,10 +1,8 @@
 import { Formik, } from 'formik'
 import { useState } from 'react'
-import './form.css'
-import closeVector from './img/close.svg'
 
 
-function Form({ guestsCount, questTitle }) {
+function Form({ guestsCount, questTitle, onSend }) {
     const [formData, setFormData] = useState({
         'quest': '',
         'name': '',
@@ -12,8 +10,8 @@ function Form({ guestsCount, questTitle }) {
         'guests': '',
     })
 
-    async function sendForm(obj){
-        try{
+    async function sendForm(obj,) {
+        try {
             const response = await fetch('https://escape-rooms-8h88.onrender.com/reserve', {
                 method: 'POST',
                 headers: {
@@ -21,8 +19,8 @@ function Form({ guestsCount, questTitle }) {
                 },
                 body: JSON.stringify(obj)
             });
-        const data = await response.json();
-        
+            const data = await response.json();
+
         } catch (error) {
             console.log('Error:', error)
             errorMessageCreate()
@@ -52,41 +50,36 @@ function Form({ guestsCount, questTitle }) {
     };
 
     return (
-        <div className="form-container">
-            <button className='form-close' onClick={() => setformState(false)}>
-                <img src={closeVector} alt="close-button" />
-            </button>
-            <h3>Match squad</h3>
-            <Formik
-                initialValues={{ name: '', phone: '', guests: '', cookies: false, }}
-                validate={validate}
-                onSubmit={(values) => {
-                    const data = { ...formData, ...values, 'quest': `${questTitle}`, }
-                    setFormData(data)
-                    sendForm(data)
-                }}
-            >
-                {({ handleSubmit, values, errors, handleChange, handleBlur, touched, isSubmitting, }) => (
-                    <form onSubmit={handleSubmit}>
-                        <input className="form--input" type="name" placeholder='Name' name='name' onChange={handleChange} onBlur={handleBlur} value={values.name} />
-                        <p>{errors.name && touched.name && errors.name}</p>
+        <Formik
+            initialValues={{ name: '', phone: '', guests: '', cookies: false, }}
+            validate={validate}
+            onSubmit={(values) => {
+                const data = { ...formData, ...values, 'quest': `${questTitle}`, }
+                onSend(true)
+                setFormData(data)
+                sendForm(data)
+            }}
+        >
+            {({ handleSubmit, values, errors, handleChange, handleBlur, touched, isSubmitting, }) => (
+                <form onSubmit={handleSubmit}>
+                    <input className="form--input" type="name" placeholder='Name' name='name' onChange={handleChange} onBlur={handleBlur} value={values.name} />
+                    <p>{errors.name && touched.name && errors.name}</p>
 
-                        <input className="form--input" type="phone" placeholder='Phone numde' name='phone' onChange={handleChange} onBlur={handleBlur} value={values.phone} />
-                        <p>{errors.phone && touched.phone && errors.phone}</p>
+                    <input className="form--input" type="phone" placeholder='Phone numde' name='phone' onChange={handleChange} onBlur={handleBlur} value={values.phone} />
+                    <p>{errors.phone && touched.phone && errors.phone}</p>
 
-                        <input type="text" className="form--input" placeholder='Number of guests' name='guests' onChange={handleChange} onBlur={handleBlur} value={values.guests} />
-                        <p>{errors.guests && touched.guests && errors.guests}</p>
+                    <input type="text" className="form--input" placeholder='Number of guests' name='guests' onChange={handleChange} onBlur={handleBlur} value={values.guests} />
+                    <p>{errors.guests && touched.guests && errors.guests}</p>
 
-                        <div className="form--cookies-wrap">
-                            <input type="checkbox" id="cookies" name="cookies" onChange={handleChange} onBlur={handleBlur} value={values.cookies} />
-                            <label htmlFor="cookies">I agree to the personal data processing rules and the user agreement.</label>
-                        </div>
-                        <p>{errors.cookies && touched.cookies && errors.cookies}</p>
-                        <button className='form-submit' type="submit" disabled={isSubmitting}>Submit</button>
-                    </form>
-                )}
-            </Formik>
-        </div>
+                    <div className="form--cookies-wrap">
+                        <input type="checkbox" id="cookies" name="cookies" onChange={handleChange} onBlur={handleBlur} value={values.cookies} />
+                        <label htmlFor="cookies">I agree to the personal data processing rules and the user agreement.</label>
+                    </div>
+                    <p>{errors.cookies && touched.cookies && errors.cookies}</p>
+                    <button className='form-submit' type="submit" disabled={isSubmitting}>Submit</button>
+                </form>
+            )}
+        </Formik>
     )
 }
 

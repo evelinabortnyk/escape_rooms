@@ -1,4 +1,4 @@
-import {  useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 import './quest.css'
@@ -7,12 +7,17 @@ import './form.css'
 import clockIcon from './img/clock.svg'
 import personIcon from '../home-page/img/person.svg'
 import puzzleIcon from '../home-page/img/puzzle.svg'
+import closeVector from './img/close.svg'
+
 import Form from "../form/Form";
 
 
 function Quest() {
     const { id } = useParams();
     const [quest, setQuest] = useState(null)
+    const [formState, setFormState] = useState(false)
+    const [message, setMessage] = useState("");
+    const [modalState, setModalState] = useState(false)
 
     useEffect(() => {
         fetch(`https://escape-rooms-8h88.onrender.com/dataQuests?id=${id}`)
@@ -20,8 +25,15 @@ function Quest() {
             .then(data => setQuest(data));
     }, []);
 
-    const [formState, setformState] = useState(false)
-    
+
+    function sendetForm(data) {
+        setMessage(data);
+    }
+    if(formState && message){
+        setModalState(true)
+        setFormState(false)
+    }
+
     if (!quest) {
         return <div className='data-err'>Loading...</div>
     }
@@ -37,10 +49,20 @@ function Quest() {
                     <div className='details-component'><img className='details-icon' src={puzzleIcon} alt="puzzle" /><p>{quest.level}</p></div>
                 </div>
                 <p className='quest--info-text'>{quest.description}</p>
-                <button className='quest--info-btn' onClick={() => setformState(true)}>BOOK NOW</button>
+                <button className='quest--info-btn' onClick={() => setFormState(true)}>BOOK NOW</button>
             </div>
             <div className={formState ? 'form-wrap' : 'hidden'}>
-                <Form guestsCount={quest.peopleCount} questTitle={quest.title}/>
+                <div className="form-container">
+                    <button className='form-close' onClick={() => setFormState(false)}>
+                        <img src={closeVector} alt="close-button" />
+                    </button>
+                    <h3>Match squad</h3>
+                    <Form onSend={sendetForm} guestsCount={quest.peopleCount} questTitle={quest.title}/>
+                </div>
+            </div>
+            <div className={modalState ? 'modal-window' : 'hidden'}>
+                <p>The form has been successfully submitted.</p>
+                <button onClick={()=> setModalState(false)}>OK</button>
             </div>
         </div>
     )
