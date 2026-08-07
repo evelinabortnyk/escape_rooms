@@ -61,8 +61,11 @@ function Quest() {
                 </div>
             </div>
             <div className={modalState ? 'modal-window' : 'hidden'}>
-                <p>The form has been successfully submitted.</p>
-                <button onClick={()=> setModalState(false)}>OK</button>
+                <div className="modal-wrap">
+                    <p className="modal-title">Thank you! We've received your request and will contact you as soon as possible.</p>
+                    <p className="modal-descript">Your next challenge awaits.</p>
+                    <button className="modal-button" onClick={()=> setModalState(false)}>Continue</button> 
+                </div>
             </div>
         </div>
     )
