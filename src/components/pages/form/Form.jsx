@@ -1,14 +1,16 @@
-import { Formik, } from 'formik'
+import { Formik, useFormik } from 'formik'
 import { useState } from 'react'
 
 
 function Form({ guestsCount, questTitle, onSend }) {
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState({})
+
+    const defaultValues = {
         'quest': '',
         'name': '',
         'phone': '',
         'guests': '',
-    })
+    };
 
     async function sendForm(obj,) {
         try {
@@ -49,11 +51,28 @@ function Form({ guestsCount, questTitle, onSend }) {
         return errors;
     };
 
+    const formik = useFormik({
+        initialValues:
+            JSON.parse(localStorage.getItem("booking-form")) ||
+            defaultValues,
+        enableReinitialize: true,
+
+        onSubmit: async (values, { resetForm }) => {
+            await sendData(values);
+
+            resetForm();
+            localStorage.removeItem("booking-form");
+
+            setIsModalOpen(true);
+        },
+    });
+
+
     return (
         <Formik
             initialValues={{ name: '', phone: '', guests: '', cookies: false, }}
             validate={validate}
-            onSubmit={(values) => {
+            onSubmit= {(values) => {
                 const data = { ...formData, ...values, 'quest': `${questTitle}`, }
                 onSend(true)
                 setFormData(data)
